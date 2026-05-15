@@ -1,0 +1,15 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["*.html","*.css","*.js","*.ico","*.png","*.jpg","*.svg"]
+  },
+  "responseOverrides": {
+    "404": {"rewrite": "/index.html", "statusCode": 200}
+  },
+  "globalHeaders": {
+    "X-Robots-Tag": "index, follow",
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-Content-Type-Options": "nosniff",
+    "Cache-Control": "public, max-age=3600"
+  }
+}
