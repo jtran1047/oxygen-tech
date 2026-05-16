@@ -37,9 +37,9 @@ img{max-width:100%}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:.3rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(7,11,20,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background .3s;height:100px}
-.logo{display:flex;align-items:center;gap:.3rem}
+.logo{display:flex;align-items:center;gap:0}
 .logo-img{width:120px;height:120px;object-fit:contain}
-.logo-name{font-family:var(--ff-d);font-size:1.4rem;font-weight:700;letter-spacing:.07em;line-height:1;display:flex;align-items:center;margin-top:0}
+.logo-name{font-family:var(--ff-d);font-size:1.4rem;font-weight:700;letter-spacing:.07em;line-height:1;display:flex;align-items:center;margin-left:-8px;margin-top:-3px}
 .logo-name span{color:var(--blue-2)}
 .nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none;transition:all .2s}
 .nav-links a{color:var(--muted);font-size:.88rem;font-weight:500;transition:color .2s}
@@ -891,34 +891,35 @@ document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
 window.addEventListener('scroll',()=>{document.getElementById('nav').style.background=window.scrollY>60?'rgba(7,11,20,0.97)':'rgba(7,11,20,0.85)';});
 let navOpen=false;
 function toggleNav(){
-  const l=document.getElementById('navlinks');navOpen=!navOpen;
+  navOpen=!navOpen;
+  let menu=document.getElementById('mobile-menu');
   if(navOpen){
-    Object.assign(l.style,{
-      display:'flex',
-      flexDirection:'column',
-      position:'fixed',
-      top:'100px',
-      left:'0',
-      right:'0',
-      background:'rgba(7,11,20,0.98)',
-      padding:'1.5rem 2rem',
-      borderBottom:'1px solid rgba(255,255,255,0.12)',
-      gap:'0',
-      zIndex:'900'
-    });
-    l.querySelectorAll('a').forEach(a=>{
-      a.style.padding='1rem 0';
-      a.style.fontSize='1.1rem';
-      a.style.borderBottom='1px solid rgba(255,255,255,0.06)';
-      a.style.color='#eef2ff';
-      a.style.display='block';
-    });
+    if(!menu){
+      menu=document.createElement('div');
+      menu.id='mobile-menu';
+      menu.style.cssText='position:fixed;top:100px;left:0;right:0;background:rgba(7,11,20,0.98);z-index:900;border-bottom:1px solid rgba(255,255,255,0.12);flex-direction:column;display:flex';
+      const items=[
+        {label:'Services',href:'#services'},
+        {label:'Platforms',href:'#specs'},
+        {label:'Why Us',href:'#why'},
+        {label:'Get in Touch',href:'#contact',highlight:true},
+      ];
+      items.forEach(item=>{
+        const a=document.createElement('a');
+        a.href=item.href;
+        a.textContent=item.label;
+        a.style.cssText=`padding:1.1rem 2rem;font-size:1.05rem;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);color:${item.highlight?'#4db8ff':'#eef2ff'};display:block;font-family:'Syne',sans-serif;letter-spacing:.02em`;
+        a.addEventListener('click',()=>toggleNav());
+        menu.appendChild(a);
+      });
+      document.body.appendChild(menu);
+    } else {
+      menu.style.display='flex';
+    }
+    document.getElementById('nav').style.borderBottom='none';
   } else {
-    l.style.display='';
-    l.querySelectorAll('a').forEach(a=>{
-      a.style.padding='';a.style.fontSize='';
-      a.style.borderBottom='';a.style.color='';a.style.display='';
-    });
+    if(menu)menu.style.display='none';
+    document.getElementById('nav').style.borderBottom='';
   }
 }
 document.querySelectorAll('#navlinks a').forEach(a=>a.addEventListener('click',()=>{if(navOpen)toggleNav();}));
