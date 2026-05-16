@@ -442,6 +442,16 @@ footer{background:var(--dark-2);border-top:1px solid var(--border);padding:4rem 
   #ai-spotlight { overflow-x:hidden !important; }
   #ai-spotlight .inner { overflow-x:hidden !important; max-width:100% !important; box-sizing:border-box !important; }
 }
+
+@media(max-width:960px){
+  #ai-spotlight { overflow-x:hidden !important; max-width:100vw !important; }
+  #ai-spotlight .inner { max-width:100% !important; padding:0 1.25rem !important; box-sizing:border-box !important; overflow:hidden !important; }
+  #ai-spotlight .ai-header { grid-template-columns:1fr !important; max-width:100% !important; box-sizing:border-box !important; }
+  #ai-spotlight .ai-stat-row { flex-wrap:wrap !important; }
+  #ai-spotlight .ai-capabilities { grid-template-columns:1fr !important; }
+  .ai-desc { max-width:100% !important; box-sizing:border-box !important; word-break:break-word !important; }
+  .ai-title { max-width:100% !important; word-break:break-word !important; }
+}
 </style>
 </head>
 <body>
