@@ -1010,7 +1010,7 @@ function placeFloatTags(){
   const customAngles=[-90,-30,30,90,160,-203.6];
   const customRadii=[260,280,280,260,320,350];
   // Direct pixel overrides for Azure (index 5) and AWS (index 4)
-  const directPos={4:{x:10,y:Math.round(180+280*Math.sin(30*Math.PI/180))},5:{x:10,y:Math.round(180+280*Math.sin(-30*Math.PI/180))}};
+  const directPos={4:{x:-60,y:Math.round(180+280*Math.sin(30*Math.PI/180))},5:{x:-60,y:Math.round(180+280*Math.sin(-30*Math.PI/180))}};
   floatItems.forEach((item,i)=>{
     let x,y;
     if(directPos[i]){x=directPos[i].x;y=directPos[i].y;}
