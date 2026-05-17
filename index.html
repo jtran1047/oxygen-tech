@@ -1003,13 +1003,15 @@ const floatItems=[
 function placeFloatTags(){
   const scene=document.getElementById('orbScene');
   if(!scene)return;
-  const cx=180,cy=180,r=260,n=floatItems.length;
+  const cx=180,cy=180,n=floatItems.length;
   const durations=[5,6,5.5,7,6.5,5.8];
   const delays=[0,-1,-2,-0.5,-3,-1.5];
-  // Custom angles: AI top, OCI upper-right, GCP lower-right, M365 bottom, AWS bottom-left, Azure top-left
-  const customAngles=[-90,-30,30,90,165,-165];
+  // AI top, OCI upper-right, GCP lower-right, M365 bottom, AWS lower-left, Azure upper-left
+  const customAngles=[-90,-30,30,90,150,-150];
+  const customRadii=[260,280,280,260,320,320];
   floatItems.forEach((item,i)=>{
     const angle=customAngles[i]*Math.PI/180;
+    const r=customRadii[i];
     const x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle);
     const tag=document.createElement('div');
     tag.className='float-tag';
