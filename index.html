@@ -1006,8 +1006,10 @@ function placeFloatTags(){
   const cx=180,cy=180,r=260,n=floatItems.length;
   const durations=[5,6,5.5,7,6.5,5.8];
   const delays=[0,-1,-2,-0.5,-3,-1.5];
+  // Custom angles: AI top, OCI upper-right, GCP lower-right, M365 bottom, AWS lower-left, Azure upper-left
+  const customAngles=[-90,-20,40,90,145,220];
   floatItems.forEach((item,i)=>{
-    const angle=((360/n)*i-90)*Math.PI/180;
+    const angle=customAngles[i]*Math.PI/180;
     const x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle);
     const tag=document.createElement('div');
     tag.className='float-tag';
