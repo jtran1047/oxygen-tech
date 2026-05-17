@@ -917,16 +917,16 @@ footer{background:var(--dark-2);border-top:1px solid var(--border);padding:4rem 
     <p class="s-desc fu d2">Tell us about your challenge and our team will be in touch within one business day to discuss how Oxygen Technologies can help.</p>
     <div class="cform fu d3">
       <div class="frow">
-        <div class="fg"><label>First Name</label><input type="text" placeholder="John"></div>
-        <div class="fg"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+        <div class="fg"><label>First Name</label><input type="text" placeholder="John" name="firstName"></div>
+        <div class="fg"><label>Last Name</label><input type="text" placeholder="Smith" name="lastName"></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>Work Email</label><input type="email" placeholder="john@company.com.au"></div>
-        <div class="fg"><label>Company</label><input type="text" placeholder="Acme Pty Ltd"></div>
+        <div class="fg"><label>Work Email</label><input type="email" placeholder="john@company.com.au" name="email"></div>
+        <div class="fg"><label>Company</label><input type="text" placeholder="Acme Pty Ltd" name="company"></div>
       </div>
       <div class="fg">
         <label>Service Interest</label>
-        <select>
+        <select name="service">
           <option value="">Select a service...</option>
           <option>AI &amp; Automation</option>
           <option>Cloud Strategy &amp; Consulting</option>
@@ -938,7 +938,7 @@ footer{background:var(--dark-2);border-top:1px solid var(--border);padding:4rem 
           <option>Other / Not sure yet</option>
         </select>
       </div>
-      <div class="fg"><label>Tell us about your project</label><textarea placeholder="Briefly describe your challenge or what you're looking to achieve..."></textarea></div>
+      <div class="fg"><label>Tell us about your project</label><textarea name="message" placeholder="Briefly describe your challenge or what you're looking to achieve..."></textarea></div>
       <button class="btn btn-blue" style="width:100%;justify-content:center;font-size:1rem;padding:1rem 2rem" onclick="submitForm(event)">Send Message →</button>
     </div>
   </div>
@@ -1175,7 +1175,42 @@ function toggleNav(){
 document.querySelectorAll('#navlinks a').forEach(a=>a.addEventListener('click',()=>{if(navOpen)toggleNav();}));
 
 // FORM
-function submitForm(e){e.preventDefault();const btn=e.target;btn.textContent="✓ Sent — we'll be in touch within one business day!";btn.style.background='#16a34a';btn.disabled=true;}
+function submitForm(e){
+  e.preventDefault();
+  const btn = e.target;
+  const form = btn.closest('.cform');
+  const payload = {
+    firstName: form.querySelector('[name="firstName"]').value,
+    lastName:  form.querySelector('[name="lastName"]').value,
+    email:     form.querySelector('[name="email"]').value,
+    company:   form.querySelector('[name="company"]').value,
+    service:   form.querySelector('[name="service"]').value,
+    message:   form.querySelector('[name="message"]').value,
+  };
+  const LOGIC_APP_URL = 'https://prod-35.australiasoutheast.logic.azure.com:443/workflows/e5a073d5cbdf4393a88a485ae00f0917/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=ayO6e-4xVATHaOqEQZwDTb_9w1dsu2qojyDxAWR-PGg';
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  fetch(LOGIC_APP_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => {
+    if (r.ok) {
+      btn.textContent = "✓ Sent — we'll be in touch within one business day!";
+      btn.style.background = '#16a34a';
+    } else {
+      btn.textContent = 'Send Message →';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again.');
+    }
+  })
+  .catch(() => {
+    btn.textContent = 'Send Message →';
+    btn.disabled = false;
+    alert('Network error. Please try again.');
+  });
+}
 
 // INIT
 setTimeout(()=>{document.querySelectorAll('.fu').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('vis');});},150);
