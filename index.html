@@ -1039,7 +1039,7 @@ function placeFloatTags(){
     else{const angle=customAngles[i]*Math.PI/180;const r=customRadii[i];x=cx+r*Math.cos(angle);y=cy+r*Math.sin(angle);}
     const tag=document.createElement('div');
     tag.className='float-tag';
-    tag.style.cssText=`left:${x}px;top:${y}px;--d:${durations[i]}s;--dl:${delays[i]}s`;
+    const extraStyle=(i===1||i===2)?';width:160px;justify-content:center':'';tag.style.cssText=`left:${x}px;top:${y}px;--d:${durations[i]}s;--dl:${delays[i]}s${extraStyle}`;
     if(item.img) tag.innerHTML=`<img src="${item.img}" alt="${item.label}" style="margin-right:4px;flex-shrink:0"><span>${item.label}</span>`;
     else tag.innerHTML=`<span style='font-size:32px;line-height:1'>${item.emoji}</span><span>${item.label}</span>`;
     scene.appendChild(tag);
