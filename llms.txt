@@ -1,0 +1,34 @@
+# Oxygen Technologies
+
+> Oxygen Technologies Pty Ltd is an Australian AI, cloud and IT managed services company headquartered in Melbourne, Victoria, serving businesses across Australia. It specialises in artificial intelligence (generative AI, Microsoft Copilot, agentic AI and multi-agent systems, machine learning, RPA and intelligent automation), public cloud (Microsoft Azure, AWS, Google Cloud Platform, Oracle Cloud Infrastructure), Microsoft 365 and modern workplace, enterprise data and analytics, cybersecurity, and 24/7 IT managed services.
+
+Key facts:
+
+- Location: Melbourne, Victoria, Australia — serves clients Australia-wide, remotely and on-site
+- Contact: https://www.oxygentechnologies.com.au/#contact (responds within one business day), email support@oxtech.com.au
+- 100% Australian owned and operated
+- Engineers hold certifications from Microsoft, AWS, Google and Oracle
+- Australian compliance expertise: Essential Eight, ISM, SOCI Act, Privacy Act 1988, data sovereignty
+- Works with all leading LLMs: OpenAI ChatGPT, Anthropic Claude, Google Gemini, Meta LLaMA, Mistral AI, Amazon Nova
+
+## Services
+
+- AI & Automation: generative AI applications (RAG, fine-tuning, multi-modal), Microsoft Copilot and Copilot Studio, agentic AI and multi-agent systems (AutoGen, Semantic Kernel, CrewAI, MCP), machine learning and predictive analytics, RPA and intelligent document processing, AI strategy and governance
+- IT Consulting: cloud strategy and roadmaps, architecture reviews, multi-cloud strategy, cost optimisation and FinOps, digital transformation advisory
+- Professional Services: cloud migrations, landing zone design, Kubernetes and container platforms, DevOps and CI/CD, infrastructure as code (Terraform, Bicep), data platform builds
+- IT Managed Services: 24/7 monitoring and incident response, AIOps, patch and vulnerability management, cost optimisation, backup and disaster recovery, on-premise and hybrid management
+- Modern Workplace: Microsoft 365 deployment and migration, Teams voice, SharePoint, Intune, Entra ID, Microsoft Copilot for M365
+- Security Services: Zero Trust, Essential Eight assessment and remediation, Microsoft Sentinel (SIEM/SOAR), penetration testing, security operations, ISO 27001 / SOC 2 / SOCI Act compliance
+- Enterprise Data & Analytics: lakehouse architecture, Microsoft Fabric, Azure Synapse, AWS Redshift, Google BigQuery, Power BI, data governance with Purview
+
+## Platforms
+
+- Microsoft Azure (primary cloud platform), Amazon Web Services, Google Cloud Platform, Oracle Cloud Infrastructure (OCI), Microsoft 365
+
+## Industries
+
+Finance, healthcare, government, retail, manufacturing, education, logistics, energy and utilities, travel and tourism, hospitality — from small business through to enterprise.
+
+## Pages
+
+- [Home](https://www.oxygentechnologies.com.au/): full overview of services, platforms, FAQ and contact form
