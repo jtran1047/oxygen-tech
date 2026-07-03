@@ -4,6 +4,7 @@
 // setting (Azure portal > Static Web App > Environment variables).
 
 const clean = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 module.exports = async function (context, req) {
   const b = (req.body && typeof req.body === 'object') ? req.body : {};
@@ -23,8 +24,10 @@ module.exports = async function (context, req) {
     message: clean(b.message, 5000)
   };
 
-  if (!Object.values(payload).some(Boolean)) {
-    context.res = { status: 400, headers: { 'Content-Type': 'application/json' }, body: { error: 'Empty submission' } };
+  // A valid email address is required — the Logic App enforces this too,
+  // but rejecting here gives the user a clear 400 and saves a workflow run.
+  if (!EMAIL_RE.test(payload.email)) {
+    context.res = { status: 400, headers: { 'Content-Type': 'application/json' }, body: { error: 'A valid email address is required' } };
     return;
   }
 

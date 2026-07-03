@@ -1297,6 +1297,11 @@ function submitForm(e){
     message:   form.querySelector('[name="message"]').value,
     website:   form.querySelector('[name="website"]').value, // honeypot
   };
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email.trim())){
+    alert('Please enter a valid email address so we can get back to you.');
+    form.querySelector('[name="email"]').focus();
+    return;
+  }
   // Submissions go through our own API (/api/contact), which forwards to the
   // Logic App server-side — its URL and access key are not exposed here.
   btn.textContent = 'Sending...';
@@ -1313,7 +1318,7 @@ function submitForm(e){
     } else {
       btn.textContent = 'Send Message →';
       btn.disabled = false;
-      alert('Something went wrong. Please try again.');
+      alert(r.status === 400 ? 'Please enter a valid email address so we can get back to you.' : 'Something went wrong. Please try again.');
     }
   })
   .catch(() => {
