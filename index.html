@@ -250,6 +250,15 @@ footer{background:var(--dark-2);border-top:1px solid var(--border);padding:4rem 
 .benefit p{color:var(--muted);font-size:.8rem;line-height:1.45}
 .modal-footer{padding:1.5rem 2rem;border-top:1px solid var(--border);background:var(--dark-3)}
 
+/* ALERT DIALOG (replaces native alert) */
+.alert-overlay{position:fixed;inset:0;background:rgba(7,11,20,.72);backdrop-filter:blur(8px);z-index:1200;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .25s}
+.alert-overlay.open{opacity:1;pointer-events:all}
+.alert-box{background:var(--dark-2);border:1px solid rgba(26,140,255,.35);border-radius:16px;padding:2rem 1.75rem 1.75rem;max-width:420px;width:100%;text-align:center;transform:translateY(14px) scale(.97);transition:transform .25s;box-shadow:0 24px 80px rgba(0,0,0,.65)}
+.alert-overlay.open .alert-box{transform:none}
+.alert-icon{width:52px;height:52px;margin:0 auto .9rem;background:rgba(26,140,255,.12);border:1px solid rgba(26,140,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.alert-title{font-family:var(--ff-d);font-size:1.1rem;font-weight:700;margin-bottom:.45rem}
+.alert-msg{color:var(--muted);font-size:.93rem;line-height:1.65;margin-bottom:1.4rem}
+
 /* ANIMATIONS */
 .fu{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 .fu.vis{opacity:1;transform:translateY(0)}
@@ -1048,6 +1057,16 @@ footer{background:var(--dark-2);border-top:1px solid var(--border);padding:4rem 
   </div>
 </footer>
 
+<!-- ALERT DIALOG -->
+<div class="alert-overlay" id="alert-overlay" onclick="if(event.target===this)closeAlert()">
+  <div class="alert-box" role="alertdialog" aria-live="assertive">
+    <div class="alert-icon" id="alert-icon">✉️</div>
+    <div class="alert-title" id="alert-title"></div>
+    <p class="alert-msg" id="alert-msg"></p>
+    <button class="btn btn-blue" onclick="closeAlert()" style="justify-content:center;min-width:130px">OK</button>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeOnBg(event)">
   <div class="modal-panel" id="modal-panel">
@@ -1283,6 +1302,16 @@ function toggleNav(){
 }
 document.querySelectorAll('#navlinks a').forEach(a=>a.addEventListener('click',()=>{if(navOpen)toggleNav();}));
 
+// ALERT DIALOG
+function showAlert(msg,title,icon){
+  document.getElementById('alert-msg').textContent=msg;
+  document.getElementById('alert-title').textContent=title||'Something needs attention';
+  document.getElementById('alert-icon').textContent=icon||'⚠️';
+  document.getElementById('alert-overlay').classList.add('open');
+}
+function closeAlert(){document.getElementById('alert-overlay').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAlert();});
+
 // FORM
 function submitForm(e){
   e.preventDefault();
@@ -1298,7 +1327,7 @@ function submitForm(e){
     website:   form.querySelector('[name="website"]').value, // honeypot
   };
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email.trim())){
-    alert('Please enter a valid email address so we can get back to you.');
+    showAlert('Please enter a valid email address so we can get back to you.','Check your email address','✉️');
     form.querySelector('[name="email"]').focus();
     return;
   }
@@ -1318,13 +1347,14 @@ function submitForm(e){
     } else {
       btn.textContent = 'Send Message →';
       btn.disabled = false;
-      alert(r.status === 400 ? 'Please enter a valid email address so we can get back to you.' : 'Something went wrong. Please try again.');
+      if(r.status === 400){showAlert('Please enter a valid email address so we can get back to you.','Check your email address','✉️');}
+      else{showAlert('Something went wrong. Please try again in a moment.','Message not sent','⚠️');}
     }
   })
   .catch(() => {
     btn.textContent = 'Send Message →';
     btn.disabled = false;
-    alert('Network error. Please try again.');
+    showAlert('We could not reach the server. Please check your connection and try again.','Connection problem','📡');
   });
 }
 
