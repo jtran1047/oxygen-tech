@@ -1,12 +1,7 @@
 // Forwards contact form submissions to the Azure Logic App so the
-// Logic App URL (and its SAS signature) never appears in client-side code.
-//
-// Set LOGIC_APP_URL in the Static Web App's application settings
-// (Azure portal > Static Web App > Environment variables). The fallback
-// below keeps the form working until that setting exists — once it is set
-// and the Logic App access key has been regenerated, the fallback is dead
-// and can be removed.
-const FALLBACK_URL = 'https://prod-35.australiasoutheast.logic.azure.com:443/workflows/e5a073d5cbdf4393a88a485ae00f0917/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=ayO6e-4xVATHaOqEQZwDTb_9w1dsu2qojyDxAWR-PGg';
+// Logic App URL (and its SAS signature) never appears in client-side code
+// or in this repository. The URL comes from the LOGIC_APP_URL application
+// setting (Azure portal > Static Web App > Environment variables).
 
 const clean = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 
@@ -33,8 +28,15 @@ module.exports = async function (context, req) {
     return;
   }
 
+  const url = process.env.LOGIC_APP_URL;
+  if (!url) {
+    context.log.error('LOGIC_APP_URL application setting is not configured');
+    context.res = { status: 500, headers: { 'Content-Type': 'application/json' }, body: { error: 'Server not configured' } };
+    return;
+  }
+
   try {
-    const upstream = await fetch(process.env.LOGIC_APP_URL || FALLBACK_URL, {
+    const upstream = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
