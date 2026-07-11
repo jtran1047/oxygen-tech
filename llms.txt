@@ -10,6 +10,7 @@ Key facts:
 - Engineers hold certifications from Microsoft, AWS, Google and Oracle
 - Australian compliance expertise: Essential Eight, ISM, SOCI Act, Privacy Act 1988, data sovereignty
 - Works with all leading LLMs: OpenAI ChatGPT, Anthropic Claude, Google Gemini, Meta LLaMA, Mistral AI, Amazon Nova
+- Open-source LLM expertise: Meta LLaMA, Mistral and Hugging Face models, deployed in the cloud or on your own infrastructure
 
 ## Services
 
